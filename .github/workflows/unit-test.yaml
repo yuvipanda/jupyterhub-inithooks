@@ -32,6 +32,8 @@ jobs:
     - name: Test with pytest
       run: |
         # Run py.test as root, as we fuck around with setuid
-        sudo "PATH=$PATH" $(which py.test) -vvv --cov=jupyterhub_inithooks  tests/
+        # Pass -E to sudo so we inherit the environment
+        # -E doesn't pass through PATH still, so we do that explicitly
+        sudo -E "PATH=$PATH" $(which py.test) -vvv --cov=jupyterhub_inithooks tests/
     - name: Upload Coverage to Codecov
       uses: codecov/codecov-action@v2
