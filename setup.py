@@ -6,7 +6,7 @@ with open("README.md") as f:
 setup(
     name="jupyterhub-inithooks",
     version="0.1",
-    description="Commandline tool to manage pangeo-forge feedstocks",
+    description="Help run hooks as root before dropping privs & running as unprivileged user",
     long_description=readme,
     long_description_content_type="text/markdown",
     author="Yuvi Panda",
