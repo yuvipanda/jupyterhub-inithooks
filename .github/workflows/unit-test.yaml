@@ -26,11 +26,11 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
-        python -m pip -r dev-requiremnets.txt
+        python -m pip install -r dev-requiremnets.txt
         python -m pip install -e .
     - name: Test with pytest
       run: |
-        # Run py.test as root, as we fuck around with setuid 
+        # Run py.test as root, as we fuck around with setuid
         sudo $(which py.test) -vvv --cov=jupyterhub_inithooks  tests/
     - name: Upload Coverage to Codecov
       uses: codecov/codecov-action@v2
