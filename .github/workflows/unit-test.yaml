@@ -32,6 +32,6 @@ jobs:
     - name: Test with pytest
       run: |
         # Run py.test as root, as we fuck around with setuid
-        sudo $(which py.test) -vvv --cov=jupyterhub_inithooks  tests/
+        sudo "PATH=$PATH" $(which py.test) -vvv --cov=jupyterhub_inithooks  tests/
     - name: Upload Coverage to Codecov
       uses: codecov/codecov-action@v2
