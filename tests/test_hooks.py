@@ -4,13 +4,13 @@ import subprocess
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
-from jupyterhub_inithooks import InitHooks
+from jupyterhub_roothooks import RootHooks
 
 HERE = Path(__file__).parent
 
 
 def test_hook_discovery():
-    app = InitHooks()
+    app = RootHooks()
 
     assert app.get_executable_files(HERE / "test-dirs/non-executable") == [
         Path(HERE / "test-dirs/non-executable/an-executable.sh")
@@ -18,7 +18,7 @@ def test_hook_discovery():
 
 
 def test_hook_ordering():
-    app = InitHooks()
+    app = RootHooks()
 
     assert app.get_executable_files(HERE / "test-dirs/hook-ordering") == [
         Path(HERE / "test-dirs/hook-ordering/01-first.sh"),
@@ -39,7 +39,7 @@ def test_hook_exec():
         os.chown(d, int(cur_uid), int(cur_gid))
 
         cmd = [
-            "jupyterhub-inithooks",
+            "jupyterhub-roothooks",
             "--hooks-dir",
             str(HERE / "test-dirs/simple-hooks"),
             "--uid",
@@ -76,7 +76,7 @@ def test_hook_exec_stub(mocker):
     Version of test_hook_exec that mocks the privilege dropping
     """
     with TemporaryDirectory() as d:
-        app = InitHooks()
+        app = RootHooks()
         app.hooks_dir = str(HERE / "test-dirs/simple-hooks")
         app.uid = 1000
         app.gid = 1000

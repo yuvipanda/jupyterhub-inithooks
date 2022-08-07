@@ -4,7 +4,7 @@ with open("README.md") as f:
     readme = f.read()
 
 setup(
-    name="jupyterhub-inithooks",
+    name="jupyterhub-roothooks",
     version="0.1",
     description="Help run hooks as root before dropping privs & running as unprivileged user",
     long_description=readme,
@@ -16,6 +16,6 @@ setup(
         "traitlets",
     ],
     entry_points={
-        "console_scripts": ["jupyterhub-inithooks=jupyterhub_inithooks:main"]
+        "console_scripts": ["jupyterhub-roothooks=jupyterhub_roothooks:main"]
     },
 )

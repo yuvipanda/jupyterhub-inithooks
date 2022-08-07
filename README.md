@@ -1,4 +1,4 @@
-# jupyterhub-inithooks
+# jupyterhub-roothooks
 
 ![Tests passing](https://github.com/yuvipanda/jupyterhub-inithooks/actions/workflows/unit-test.yaml/badge.svg)
 [![codecov](https://codecov.io/gh/yuvipanda/jupyterhub-inithooks/branch/main/graph/badge.svg?token=DFIJ7NAR0W)](https://codecov.io/gh/yuvipanda/jupyterhub-inithooks)

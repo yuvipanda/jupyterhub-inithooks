@@ -9,11 +9,11 @@ from traitlets import Integer, Unicode, default
 from traitlets.config import Application
 
 
-class InitHooks(Application):
+class RootHooks(Application):
     aliases = {
-        "hooks-dir": "InitHooks.hooks_dir",
-        "uid": "InitHooks.uid",
-        "gid": "InitHooks.gid",
+        "hooks-dir": "RootHooks.hooks_dir",
+        "uid": "RootHooks.uid",
+        "gid": "RootHooks.gid",
     }
 
     log_level = logging.INFO
@@ -31,7 +31,7 @@ class InitHooks(Application):
     @default("hooks_dir")
     def _hooks_dir_default(self):
         if "REPO_DIR" in os.environ:
-            return f"{os.environ['REPO_DIR']}/inithooks.d"
+            return f"{os.environ['REPO_DIR']}/roothooks.d"
 
     hook_timeout = Integer(
         5,
@@ -120,7 +120,7 @@ class InitHooks(Application):
 
 
 def main():
-    app = InitHooks()
+    app = RootHooks()
     app.start()
 
 
