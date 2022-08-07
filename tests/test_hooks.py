@@ -3,7 +3,7 @@ import pwd
 import shutil
 import subprocess
 from tempfile import TemporaryDirectory
-from jupyterhub_singleuser_inithooks import InitHooks
+from jupyterhub_inithooks import InitHooks
 from pathlib import Path
 
 HERE = Path(__file__).parent
@@ -39,7 +39,7 @@ def test_hook_exec():
         os.chown(d, int(cur_uid), int(cur_gid))
 
         cmd = [
-            shutil.which('jupyterhub-singleuser-inithooks'),
+            shutil.which('jupyterhub-inithooks'),
             '--hooks-dir',str(HERE / 'test-dirs/simple-hooks'),
             '--uid', str(cur_uid), '--gid', str(cur_gid),
             '--',

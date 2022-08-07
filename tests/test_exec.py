@@ -1,7 +1,7 @@
 import pytest
 from pathlib import Path
 from tempfile import TemporaryDirectory
-from jupyterhub_singleuser_inithooks import InitHooks
+from jupyterhub_inithooks import InitHooks
 
 def test_simple():
     app = InitHooks()

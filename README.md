@@ -1,1 +1,1 @@
-# jupyterhub-singleuser-init
+# jupyterhub-inithooks

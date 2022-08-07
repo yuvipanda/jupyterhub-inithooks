@@ -4,7 +4,7 @@ with open("README.md") as f:
     readme = f.read()
 
 setup(
-    name="jupyterhub-singleuser_inithooks",
+    name="jupyterhub-inithooks",
     description="Commandline tool to manage pangeo-forge feedstocks",
     long_description=readme,
     long_description_content_type="text/markdown",
@@ -16,6 +16,6 @@ setup(
         "traitlets",
     ],
     entry_points={
-        "console_scripts": ["jupyterhub-singleuser-inithooks=jupyterhub_singleuser_inithooks:main"]
+        "console_scripts": ["jupyterhub-inithooks=jupyterhub_inithooks:main"]
     },
 )
