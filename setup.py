@@ -5,6 +5,7 @@ with open("README.md") as f:
 
 setup(
     name="jupyterhub-inithooks",
+    version="0.1",
     description="Commandline tool to manage pangeo-forge feedstocks",
     long_description=readme,
     long_description_content_type="text/markdown",
