@@ -37,7 +37,7 @@ So the goal would be to:
 use with JupyterHub, so `jupyterhub-roothooks` specifies some defaults that make it
 easy to integrate with repo2docker.
 
-1. Install `jupyterhub-roothooks` into your container, by adding it to your `requirements.txt`
+1. Install `jupyterhub-roothooks` into your container image, by adding it to your `requirements.txt`
    file or under `pip:` in your `environment.yml` file.
 2. Add a `roothooks.d` directory to your repo.
 3. Add scripts you want executed as root inside the `roothooks.d` directory. These will
@@ -55,6 +55,37 @@ easy to integrate with repo2docker.
    This will start `jupyterhub-roothooks`, which will execute any executable scripts it
    finds in `roothooks.d`, and then run the appropriate command to start the user server
    (passed in via `$@`) with the non-root uid 1000 and gid 1000.
+
+### Prepare the image: With a `Dockerfile`
+
+1. Install `jupyterhub-roothooks` into your container image.
+
+   ```Dockerfile
+   RUN pip install --no-cache jupyterhub-roothooks
+   ```
+
+2. Add a `roothooks.d` directory to your repo, and copy it over to your container image.
+
+   ```Dockerfile
+   COPY roothooks.d /srv/roothooks.d
+   ```
+
+3. Add scripts you want executed as root inside the `roothooks.d` directory. These will
+   be executed in *sorted order*, so you can clarify the ordering by prefixing them with
+   numbers like `01-first-script.sh`, `02-second-script.sh`.
+
+4. Make sure these scripts are marked as executable (with `chmod +x <script-name>`), and
+   have an appropriate [shebang](https://en.wikipedia.org/wiki/Shebang_(Unix)).
+
+5. Add an `ENTRYPOINT` to your `Dockerfile` that invokes `jupyterhub-roothooks`
+
+   ```Dockerfile
+   ENTRYPOINT ["jupyterhub-roothooks", "--uid", "1000", "--gid", "1000", "--hooks-dir", "/srv/roothooks.d", "--"]
+   ```
+
+   This will start `jupyterhub-roothooks`, which will execute any executable scripts it
+   finds in `roothooks.d`, and then run the appropriate command to start the user server
+   (passed in via args) with the non-root uid 1000 and gid 1000.
 
 ### z2jh configuration
 
