@@ -108,3 +108,42 @@ hub:
                     add:
                     - SYS_ADMIN
 ```
+
+## Common uses
+
+### Mount object storage as files with FUSE
+
+#### Should you do it?!
+
+There are projects like gcsfuse or s3fuse that allow users to access
+object storage (like GCS or S3) via a traditional POSIX filesystem-like
+interface. This has serious performance and reliability disadvantages, as a
+n extra layer of complexity is added to each data access. If your code is
+accessing object storage directly, it goes:
+
+```mermaid
+flowchart LR
+    code[Your Code]-- HTTP -->obj[Object Storage]
+```
+
+with FUSE, it becomes:
+
+```mermaid
+flowchart LR
+    code[Your Code]-- Filesystem Call-->kernel[Linux Kernel]-->fuse[User space fuse driver]--HTTP -->obj[Object Storage]
+```
+
+The extra hops add complexity as well as performance degradation that could
+be avoided. Some aspects don't translate very well (for example, RANGE requests),
+and you might lose performance there too.
+
+So you should just directly get your data from object storage when possible! However,
+if you *really* need, you can use `jupyterhub-roothooks` to setup FUSE.
+
+#### S3 Example
+
+[This hook script](https://github.com/AllenInstitute/swdb_2022_hub_image/blob/c5f4ef6fba053232ef5405bcec51e3a0d878d420/roothooks.d/01-setup-s3fs.bash)
+provides an example of how you would do this on S3.
+
+You need to make sure the [s3fs](https://github.com/s3fs-fuse/s3fs-fuse) apt package
+is installed in the image.
